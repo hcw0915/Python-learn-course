@@ -33,9 +33,6 @@
 import datetime
 
 
-import datetime
-
-
 class Info:
   def __init__(self, name, phone_num, address, birthday, gender):
     self.name = name

@@ -64,21 +64,20 @@ def age_compare():
     name_hub.append(i.name)
   max_age = max(age_hub)
   min_age = min(age_hub)
-  print(" %s 的年齡最大，它 %d 歲" % ( name_hub [ age_hub.index(max_age) ] , max_age ) )
-  print(" %s 的年齡最小，它 %d 歲" % ( name_hub [ age_hub.index(min_age) ] , min_age ) )
+  print("%s 的年齡最大，它 %d 歲" % ( name_hub [ age_hub.index(max_age) ] , max_age ) )
+  print("%s 的年齡最小，它 %d 歲" % ( name_hub [ age_hub.index(min_age) ] , min_age ) )
 
 
 def create_file(): 
-  nums = eval(input("請輸入你要建立檔案的數量:"))
   list_info = []
   for i in range(nums):
     print("--輸入第 %d 隻--" %(i+1))
     name,age,color = input("請輸入名字:"),eval(input("請輸入年齡:")),input("請輸入毛色:")
     a = Petinfo(name,age,color)    
-    list_info.append(a)
+    list_info.append(a) # Line 75、76、77→ list_info.append(Perinfo(input("請輸入名字:"),eval(input("請輸入年齡:")),input("請輸入毛色:")))
   return list_info
 
-
+nums = eval(input("請輸入你要建立檔案的數量:"))
 create = create_file()
 age_compare()
 

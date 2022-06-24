@@ -22,16 +22,16 @@ class Gaming_Programs:
 				any_key()
 
 	# 1.BMI計算
-	def bmi():
+	def bmi(self):
 		print("=====================")
 		print("歡迎來到PY健康中心")
 		weight = eval(input("請輸入體重(kg):"))
 		height = eval(input("請輸入身高(cm):"))
 		bmi = weight / ((height/100) ** 2)
 		print("=====================")
-		print("你的BMI為%.2f(kg/cm2)" % (bmi))		# %(lambda bmi:weight / ((height/100) ** 2))
+		print("你的BMI為%.2f(kg/cm2)" % (bmi))
 
-		# 計算「標準體重」的功能並給予建議
+		# 計算「健康署標準體重」的功能並給予建議
 		rcmd_up = 24*(height/100)**2
 		rcmd_low = 18.5*(height/100)**2
 		if bmi >= 24 or bmi < 18.5:
@@ -42,20 +42,18 @@ class Gaming_Programs:
 	# 2.溫度轉換
 	def temp_trans(self):
 		while True:
-			# 公式區
-			fah = (float(cel) * 9 / 5) + 32  # C → F
-			cel = (float(fah) - 32) * 5 / 9  # F → C
-			#---Content---
 			print("=====================")
 			print("歡迎來到PY溫度計")
 			print("請輸入你要傳換的溫度單位(1/2):\n1.華式\n2.攝氏")
 			option = input()
 			if option == "1":
 				cel = input("請輸入攝氏溫度:")
+				fah = (float(cel) * 9 / 5) + 32  # C → F
 				print("現在溫度為華氏%.2f度。" % (fah))
 				break
 			elif option == "2":
 				fah = input("請輸入華氏溫度:")
+				cel = (float(fah) - 32) * 5 / 9  # F → C
 				print("現在溫度為攝氏%.2f度。" % (cel))
 				break
 			else:
@@ -65,10 +63,6 @@ class Gaming_Programs:
 	# 3.公/英里換算
 	def distance(self):
 		while True:
-			# 公式區
-			miles = km * 0.62
-			km = miles / 0.6
-			#---Content---
 			print("=====================")
 			print("歡迎來到PY公/英哩傳換器")
 			print("請輸入你要兌換的長度單位(1/2):\n1.公里\n2.英哩")
@@ -76,10 +70,12 @@ class Gaming_Programs:
 			num = input()
 			if num == "1":
 				km = eval(input("請輸入公里數:"))
+				miles = km * 0.62
 				print("%.2f公里為%.2f英哩。" % (km, miles))
 				break
 			elif num == "2":
-				miles = eval(input("請輸入英哩數:"))
+				miles = eval(input("請輸入英哩數:"))			
+				km = miles / 0.6
 				print("%.2f英哩為%.2f公里。" % (miles, km))
 				break
 			else:
@@ -133,7 +129,7 @@ class Gaming_Programs:
 		code = random.randint(1, 100)
 		ceil = 100  # 設定初始上限
 		floor = 1  # 設定初始下限
-		print(code)
+		print("答案:",code)
 		while True:
 			print("---------------------")
 			print("請輸入密碼:(密碼介於%d~%d之間)" % (floor, ceil))
@@ -143,10 +139,10 @@ class Gaming_Programs:
 				break
 			elif code <= ans <= ceil:
 				print("密碼介於%d~%d" % (floor, ans))
-				ceil = ans  # 設定答案為範圍上限
+				ceil = ans   # 此輪定義答案為範圍上限
 			elif floor <= ans <= code:
 				print("密碼介於%d~%d" % (ans, ceil))
-				floor = ans  # 設定答案為範圍下限
+				floor = ans  # 此輪定義答案為範圍下限
 			else:
 				input("(輸入錯誤，請按任意鍵重新作答...)")
 
@@ -162,7 +158,7 @@ class Gaming_Programs:
 				elif str.isdigit(answer) == False:  # 若不是數字則~~~
 					upper = answer.upper()  # 指定upper = 輸入答案轉為大寫字母
 					if upper in Answer_list[i]:  # 判定字母有沒有在Answer[i]的答案列表裡不同的字典
-						# 變數 i 用下面for迴圈的 i 去代入 (讓列表可自動切到不同字典)
+						# 變數 i 用 for 迴圈代入 (讓列表可自動切到不同分數dict)
 						score_default += Answer_list[i][upper]
 						print("此題得分為%d分，目前分數為%d分\n" %
 							  (Answer_list[i][upper], score_default))
@@ -174,18 +170,14 @@ class Gaming_Programs:
 		
 		#---Content--
 		print("=============歡迎來到PY升職記=============\n")
-		print("你好，你是一位公司業務，需要透過提升與老闆的好感度，晉升主管的位置。\n\
-	  以下將有「3」個問題，每個問題都有對應分數，並請試著達到高分。\n")
+		print("你好，你是一位公司業務，需要透過提升與老闆的好感度，晉升主管的位置。以下將有「3」個問題，每個問題都有對應分數，並請試著達到高分。\n")
 		any_key()
 
 		# ================================================ MAIN ========
 		Question_list = [  # 第一題~第三題的題目列表
-			"早晨，你剛進公司電梯就看到老闆，請問應該怎麼辦呢?(A~C)\n\n\
-		A.見面尷尬，微笑以待。\nB.精神飽滿，噓寒問暖。\nC.繼續低頭滑手機。",
-			"工作中，老闆請你幫他買一杯咖啡，請問應該怎麼辦呢?(A~C)\n\n\
-		A.不要找我，我很忙。\nB.好的老闆，要甚麼口味的?。\nC.老闆，我也想點一杯嗎?。",
-			"下班時間到了，老闆問你今天可不可以加班，請問應該怎麼辦呢?(A~C)\n\n\
-		A.老闆，我晚一點還有事。\nB.好的老闆，衝衝衝!\nC.老闆，下班時間，絕不加班!"
+			"早晨，你剛進公司電梯就看到老闆，請問應該怎麼辦呢?(A~C)\n\nA.見面尷尬，微笑以待。\nB.精神飽滿，噓寒問暖。\nC.繼續低頭滑手機。",
+			"工作中，老闆請你幫他買一杯咖啡，請問應該怎麼辦呢?(A~C)\n\nA.不要找我，我很忙。\nB.好的老闆，要甚麼口味的?。\nC.老闆，我也想點一杯嗎?。",
+			"下班時間到了，老闆問你今天可不可以加班，請問應該怎麼辦呢?(A~C)\n\nA.老闆，我晚一點還有事。\nB.好的老闆，衝衝衝!\nC.老闆，下班時間，絕不加班!"
 		]  # 1x3
 		Answer_list = [
 			{"A": 1, "B": 2, "C": 0},  # 第一題得分分配
@@ -196,8 +188,7 @@ class Gaming_Programs:
 		score = 0                                  # 初始分數
 		for i in range(3):                         # 用 list 跟 dict 制定題目跟的分數(變於管理題目、答案更新)
 			print("========第%d題========" % (i+1))
-			print(Question_list[i])
-			# 分數由Promote_choice()函式裡面去累加，每次迴圈都return新的score
+			print(Question_list[i])									 # 分數由Promote_choice()函式裡面去累加，每次迴圈都return新的score
 			score = promote_choice(score, i)
 			any_key()                                # i主要是賦予函式內 用Answer_list找列表裡的字典 !!!!
 			print("")                                # 純粹換行用
@@ -224,9 +215,8 @@ class Gaming_Programs:
 					a += 1                          # 如果位置和內容都相同，就將 a 增加 1
 				else:
 					if int(i) in ans:               # 如果位置不同，但答案裡有包含使用者輸入的數字
-						b += 1                        # 就將 b 增加 1
-				# 因為輸入的每個數字(列表內的每個數字)都要判斷，將 n 增加 1
-				n += 1
+						b += 1                        # 就將 b 增加 1	
+				n += 1														# 因為輸入的每個數字(列表內的每個數字)都要判斷，將 n 增加 1
 			# answer = ",".join(nums).replace(",","")     # 可用可不用 可與下面user替換
 			nums = [int(x) for x in nums]       # 四個數字都判斷後，使用 join 將串列合併成字串
 			print(nums, ":{:d}A{:d}B".format(a, b))
@@ -303,15 +293,15 @@ class Gaming_Programs:
 		banker_cards = random.sample(pokercards, 2)  # 莊家預設牌x2
 		player_cards = random.sample(pokercards, 2)  # 玩家預設牌x2
 
-		for i in range(len(banker_cards)):  # 把預設牌的值 從牌組內排除
+		for i in range(len(banker_cards)): 								# 把預設牌的值 從牌組內排除
 			# 莊家
-			num_banker = banker_cards[i]  # 預設牌給予變數num
+			num_banker = banker_cards[i]  									# 預設牌給予變數num
 			Position_banker = pokercards.index(num_banker)  # 依順序找num在Pokercards的位置
-			del pokercards[Position_banker]  # 找到位置後刪除P裡面的num_banker
+			del pokercards[Position_banker]  								# 找到位置後刪除P裡面的num_banker
 			# 玩家
-			num_player = player_cards[i]  # 預設牌給予變數num
+			num_player = player_cards[i]  									# 預設牌給予變數num
 			Position_player = pokercards.index(num_player)  # 依順序找num在Pokercards的位置
-			del pokercards[Position_player]  # 找到位置後刪除P裡面的num_banker
+			del pokercards[Position_player]  								# 找到位置後刪除P裡面的num_banker
 		# print(pokercards) #這時的P就是 扣掉莊家、玩家共4張牌的列表
 
 		# 遊戲步驟
@@ -341,15 +331,16 @@ class Gaming_Programs:
 		}  # 這個是 hangman 圖示
 
 		# 題目設計，隨機出題(後面可自由新增難易度選項跟題海，欄位設定為難易度/分類)
-		dict = ["apple", "banana", "cat", "doodle", "elephant", "fragile", "bedroom",
-				"enough", "computer", "giant", "interesting", "grape", "noodle",
+		dict = ["apple", "banana", "cat", "watermelon", "elephant", "cheery", "bedroom",
+				"enough", "computer", "giant", "kiwi", "grape", "noodle",
 				"sister", "taiwan", "watermelon", "wonderful"]
 		question = random.sample(dict, 1)  # 隨機從字典裡挑1個 (路徑,樣本數)
 
-		# 題目分割成各單元
-		list_question = []
-		for i in range(len(question)):
-			list_question += question[i]
+		list_question = list(question[0])  # question 是list型態 先取出[0]，對字串list就會分割字母	
+		# 直接分割 不用再土炮用for迴圈 填入
+		# list_question = []		
+		# for i in range(len(question)):
+		# 	list_question += question[i]
 
 		question_copy = list_question.copy()  # 複製一個copy 主要是為了要跟 while迴圈裡跟answer比對
 		anwser = ["_"]*(len(list_question))  # 製造與題目相同長度的 ["_","_","_","_","_"]
@@ -357,11 +348,11 @@ class Gaming_Programs:
 		print("猜猜題目的英文單字是甚麼吧!!!")
 		print("===============================")
 		print("題目: ", ' '.join(anwser))    # 題目: _ _ _ _ _ _  空白連接每個字元
-
+		# print(list_question)
+		# print(anwser)
 		list_guess = []                   # 預設猜過的字母放裡面
 		count_wrong = 0                   # 預設猜錯數從0開始
 		while anwser != question_copy:    # 兩個不相等代表還沒有猜中
-			any_key()
 			alphbet = input("請輸入字母(a~z):")
 			print("===============")
 			# 把答案放進猜的空list裡面  確認猜過的字母
@@ -385,7 +376,9 @@ class Gaming_Programs:
 					print("---------------")
 			elif alphbet not in list_question:
 				count_wrong += 1
+				print("---------------")
 				print("你已猜過的字母: ", ' '.join(list_guess))
+				print("答案: ", ' '.join(anwser))
 				print("---------------")
 				print("Oh,NO!!  你已猜錯 %d 次!! 剩餘 %d 次機會。" %(count_wrong, 7-count_wrong))
 				print("---------------")

@@ -204,6 +204,10 @@ class Gaming_Programs:
 
 	# 8.AB遊戲-註解已整理
 	def ab_game(self):
+		"""
+		＊用Random取題目變數
+		＊使用list填入比對做迴圈判斷
+		"""
 		ans = list(random.sample(range(1, 10), 4))  # 取 4位變數1~10
 		print(ans)
 		a = b = n = 0  # 賦予初始值 a=A符合數 b=B符合數 n=取陣列n數 皆從0開始 做for迴圈。

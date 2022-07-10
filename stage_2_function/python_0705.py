@@ -61,22 +61,12 @@ def Operating_list():
 
 def staff_data_query():  # 還要再修正登入系統
   while True: 
-    # 從SQL裡面抓資料
-    user_acc = input("請輸入帳號:")
-
-    if user_acc == "" : 
-      print("你輸入為空值，請重新執行。")
-      break
-
-    sql_1 = "SELECT sf_name,sf_account,sf_pwd FROM staff_info WHERE sf_account='"+user_acc+"' AND sf_del = '0'" 
-    cur.execute(sql_1) # 資料庫執行抓資料存在cur裡  # sql 裡面抓變數用"+變數+"
-    staff_info = cur.fetchone() # print(staff_acc) # 總共抓了 名字、帳號、密碼三個欄位
-  
-    if staff_info == None: 
+    data = sql_check_acc_existed() #不確定指定的data資料跟函數內return的data內容是否一樣 須測試
+    if data == None: 
       print("此帳號不存在")
       continue
 
-    staff_pwd = staff_info[2]
+    staff_pwd = data[2]
     user_pwd = input("請輸入密碼:")
     if user_pwd == "":
       break
@@ -97,34 +87,91 @@ def staff_data_insert():
 
     acc=input("請輸入帳號")
     if acc == "" :
-        print("帳號不能為空")
-        continue
+      print("帳號不能為空")
+      continue
 
-    sql = "SELECT * FROM staff_info WHERE sf_account = '"+ acc + "'"
-    cur.execute(sql)
+    # 確認帳號是否存在
+    sql_query_all_acc = " SELECT * FROM staff_info WHERE sf_account = '"+ acc +"' "
+    cur.execute(sql_query_all_acc)
     data = cur.fetchone()
+    if not data == None:  # 如果data不存在，data == None，代表沒找到，可以新增；若data已存在，data != None，顯示帳號已存在，無法新增。
+      print(" %d ，此帳號已存在" %acc)
+      continue
 
-    if not data == None:
-        print("{}帳號已存在".format(acc))
-        continue
     pwd = input("請輸入密碼")
     sql_insert = "INSERT INTO staff_info(sf_name,sf_account,sf_pwd,create_user,update_user)VALUES('"+name+"','"+acc+"','"+pwd+"','"+name+"','"+name+"')" 
     #print(sql_insert)
     cur.execute(sql_insert)
     conn.commit() 
-    print("使用者 {} :帳號已註冊成功，可以重新登入已進入系統".format(acc))
+    print("使用者 %d :帳號已註冊成功，可以重新登入已進入系統" %acc)
     break
 
-def staff_data_update():
-  sql_1 = "SELECT sf_name,sf_account,sf_pwd FROM staff_info WHERE sf_account='"+user_acc+"' AND sf_del = '0'" 
-  cur.execute(sql_1) # 資料庫執行抓資料存在cur裡  # sql 裡面抓變數用"+變數+"
-  staff_info = cur.fetchone() # print(staff_acc) # 總共抓了 名字、帳號、密碼三個欄位
+def staff_data_update():  # 可以調整修改內容 不僅限於使用者姓名。
+  while True:
+    acc = input("請輸入要修改的帳號:")
+    if acc == "":
+      break
 
+    sql_query = " SELECT sf_name,sf_account,sf_pwd,sf_del FROM staff_info WHERE sf_account='" + acc + "' "
+    cur.execute(sql_query)
+    staff_data=cur.fetchone()
+    # 查詢需更改的帳號是否存在
+    if(staff_data == None):
+      print(" %d ，此帳號不存在" %acc)
+      continue
+    print(staff_data)
+    # 主要修改姓名
+    newname = input("請輸入新的姓名")
+    # sql_3 是更新sf_name的SQL語法
+    sql_update = " UPDATE staff_info SET sf_name='"+ newname +"' WHERE sf_account='"+ acc +"' "
+    cur.execute(sql_update) 
+    conn.commit()
 
-  return None
+    # 用SQL_query語法查詢是否確實完成修改
+    cur.execute(sql_query)
+    person=cur.fetchone()
+    print(person)
+    input("修改成功，請按任意鍵回首頁")
+    break
 
 def staff_data_delete():
-  return None
+  while True:
+    acc = input("請輸入要刪除的帳號:")
+    if acc == "":
+      print("你輸入的是空職")
+      break
+    # 先查詢帳號存在與否
+    sql_query = " SELECT sf_name,sf_account,sf_pwd,sf_del FROM staff_info WHERE sf_account='" + acc + "' "
+    cur.execute(sql_query)
+    data = cur.fetchone()
+    if data == None:
+      print(" %d ，此帳號不存在" % acc)
+      continue
+    # 依照重複輸入帳號去做比對，完備刪除程序。
+    option = input("如確認刪除請再次輸入此帳號?")
+    if option == data[1]: # 用option比對 先前的data[1](帳號名稱)
+      # 讓SQL自行尋找要刪除的帳號
+      sql_delete="DELETE FROM staff_info WHERE sf_acc = '" +option+"' "
+      cur.execute(sql_delete)
+      conn.commit() # commit 確認提交(用於資料庫"更新")
+      input("刪除成功，請輸入任意鍵回首頁")
+      break
+
+
+def sql_check_acc_existed():
+  # 從SQL裡面抓資料
+  acc = input("請輸入帳號:")
+  if acc == "" : 
+    print("你輸入為空值，請重新執行。")
+
+  sql_query = "SELECT sf_name,sf_account,sf_pwd FROM staff_info WHERE sf_account='"+ acc +"' AND sf_del = '0'" 
+  cur.execute(sql_query) # 資料庫執行抓資料存在cur裡  # sql 裡面抓變數用"+變數+"
+  data = cur.fetchone() # print(staff_acc) # 總共抓了 名字、帳號、密碼三個欄位
+  return data
+
+# 建議用class 去存SQL語法資料 各種語法彙整 確認利用種況
+
+
 
 # Managers_login_interface()
 # Operating_interface()

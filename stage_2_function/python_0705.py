@@ -109,7 +109,7 @@ def staff_data_update():  # 可以調整修改內容 不僅限於使用者姓名
       print("此帳號不存在!")
       continue
     print(staff_data)
-    # 主要修改姓名
+    # 主要修改姓名 
     newname = input("請輸入新的姓名:")
     # sql_3 是更新sf_name的SQL語法
     sql_update = " UPDATE staff_info SET sf_name='"+ newname +"' WHERE sf_account='"+ acc +"' "

@@ -1,4 +1,3 @@
-from urllib.request import DataHandler
 import pymysql
 conn = pymysql.connect(host='localhost',user='root',passwd='',db='python',charset='utf8')
 cur = conn.cursor() 
@@ -52,6 +51,7 @@ def Operating_list():
       print("已離開本系統，返回登入頁面")
       anykey()
       break
+
 
 
 def login_check():  # 還要再修正登入系統
@@ -204,6 +204,7 @@ class SQL_Grammar:
     sql = "DELETE FROM staff_info WHERE sf_account = '" + acc +"' "
     cur.execute(sql)
     conn.commit() # commit 確認提交(用於資料庫"更新")
+
 
 sql = SQL_Grammar()
 

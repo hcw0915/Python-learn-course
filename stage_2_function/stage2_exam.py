@@ -129,7 +129,7 @@ class Gaming_Programs:
 		code = random.randint(1, 100)
 		ceil = 100  # 設定初始上限
 		floor = 1  # 設定初始下限
-		print("答案:",code)
+		# print("答案:",code)
 		while True:
 			print("---------------------")
 			print("請輸入密碼:(密碼介於%d~%d之間)" % (floor, ceil))
@@ -209,7 +209,7 @@ class Gaming_Programs:
 		＊使用list填入比對做迴圈判斷
 		"""
 		ans = list(random.sample(range(1, 10), 4))  # 取 4位變數1~10
-		print(ans)
+		# print(ans)
 		a = b = n = 0  # 賦予初始值 a=A符合數 b=B符合數 n=取陣列n數 皆從0開始 做for迴圈。
 		while a != 4:
 			a = b = n = 0  # 每次迴圈都回到初始0
